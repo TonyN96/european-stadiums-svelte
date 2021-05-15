@@ -1,0 +1,43 @@
+<script>
+    import ListStadiums from "../components/ListStadiums.svelte";
+    import { navBar, mainMenu } from "../stores";
+    navBar.set({
+        bar: mainMenu,
+    });
+</script>
+
+<div class="uk-container uk-margin">
+    <div class="uk-width-expand uk-flex-center uk-flex-middle uk-text-center uk-margin-top">
+        <div class=" uk-width-expand">
+            <div class="uk-margin">
+                <p class="uk-text-medium uk-text-center uk-width-1-2 uk-margin-auto">
+                    Welcome to the European Stadiums web app. This app is designed to store and
+                    display a database of football stadiums from the top five European leagues.
+                    These leagues are based in England, France, Germany, Italy and Spain. You can
+                    add new stadiums or update/remove existing stadiums.
+                </p>
+
+                <!-- <p class="uk-inline uk-text-muted uk-margin-right uk-margin-remove-top">
+                    Stadiums: {stadiumsCount}
+                </p>
+                <p class="uk-inline uk-text-muted uk-margin-left uk-margin-remove-top">
+                    Users: {usersCount}
+                </p> -->
+
+                <div
+                    class="uk-width-expand uk-margin-large-bottom uk-margin-small-top uk-text-center"
+                >
+                    <a href="add-stadium">
+                        <button class="uk-button uk-button-secondary">Add Stadium</button>
+                    </a>
+                </div>
+            </div>
+
+            <ListStadiums country="England" />
+            <ListStadiums country="France" />
+            <ListStadiums country="Germany" />
+            <ListStadiums country="Italy" />
+            <ListStadiums country="Spain" />
+        </div>
+    </div>
+</div>
