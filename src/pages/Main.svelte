@@ -1,0 +1,24 @@
+<script>
+    import { navBar, welcomeMenu } from "../stores";
+    navBar.set({
+        bar: welcomeMenu,
+    });
+</script>
+
+<div class="uk-container uk-margin">
+    <div class="uk-width-expand uk-flex-center uk-flex-middle uk-text-center uk-margin-top" uk-grid>
+        <div class="uk-width-expand">
+            <img
+                width="500"
+                src="https://res.cloudinary.com/dczqccpne/image/upload/v1615904950/stadium_vrzmkh.jpg"
+                alt="main-img"
+            />
+        </div>
+        <div class="uk-width-expand">
+            <h1 class="uk-heading-small">Welcome to European Stadiums</h1>
+            <p>
+                <a href="/#/signup">Sign Up</a> or <a href="/#/login">Log in</a> to view and edit stadiums.
+            </p>
+        </div>
+    </div>
+</div>
