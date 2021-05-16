@@ -27,7 +27,7 @@
                 <div
                     class="uk-width-expand uk-margin-large-bottom uk-margin-small-top uk-text-center"
                 >
-                    <a href="add-stadium">
+                    <a href="#/add-stadium">
                         <button class="uk-button uk-button-secondary">Add Stadium</button>
                     </a>
                 </div>

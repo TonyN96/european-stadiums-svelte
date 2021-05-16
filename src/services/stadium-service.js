@@ -97,4 +97,19 @@ export class StadiumService {
             return false;
         }
     }
+
+    async signup(firstName, lastName, email, password) {
+        try {
+            const response = await axios.post(`${this.baseUrl}/api/users/signup`, {
+                firstName,
+                lastName,
+                email,
+                password,
+            });
+            user.set(response.data);
+            return response.status == 200;
+        } catch (error) {
+            return false;
+        }
+    }
 }
