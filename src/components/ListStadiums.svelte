@@ -3,9 +3,10 @@
 
     const stadiumService = getContext("StadiumService");
     export let country;
+    export let mapsKey;
     let stadiumList = [];
     onMount(async () => {
-        stadiumList = await stadiumService.getStadiumsByCountry(country);
+        stadiumList = await stadiumService.findStadiumByCountry(country);
     });
 </script>
 
@@ -35,18 +36,26 @@
             </div>
 
             <div class="uk-width-expand uk-flex uk-flex-between uk-flex-bottom">
-                <div class="uk-text-meta">
+                <!-- <div class="uk-text-meta">
                     Added by: {stadium.addedBy.firstName}
                     {stadium.addedBy.lastName}
-                </div>
+                </div> -->
 
                 <div>
-                    <!-- <div class="uk-inline" style="vertical-align: baseline;" uk-lightbox>
-                    <a href="https://www.google.com/maps/embed/v1/place?key={../mapsKey}&q={stadium.coords.[0]},{stadium.coords.[1]}&maptype=satellite"
-                        data-caption="{stadium.name}, {stadium.city}" data-type="iframe"><i class="fas fa-map-marker-alt"
-                            style="color: rgba(49, 216, 57, 0.829); font-size: 24px;" title="View on map"
-                            uk-tooltip></i></a>
-                </div> -->
+                    <div class="uk-inline" style="vertical-align: baseline;" uk-lightbox>
+                        <a
+                            href="https://www.google.com/maps/embed/v1/place?key={mapsKey}&q={stadium
+                                .coords[0]},{stadium.coords[1]}&maptype=satellite"
+                            data-caption="{stadium.name}, {stadium.city}"
+                            data-type="iframe"
+                            ><i
+                                class="fas fa-map-marker-alt"
+                                style="color: rgba(49, 216, 57, 0.829); font-size: 24px;"
+                                title="View on map"
+                                uk-tooltip
+                            /></a
+                        >
+                    </div>
 
                     <div
                         class="uk-inline"
@@ -80,7 +89,7 @@
                     <button class="uk-button uk-button-default uk-modal-close" type="button"
                         >Cancel</button
                     >
-                    <a href="delete-stadium/{stadium._id}"
+                    <a href="#/delete-stadium/{stadium._id}"
                         ><button
                             class="uk-button"
                             style="background-color: red; color: white;"

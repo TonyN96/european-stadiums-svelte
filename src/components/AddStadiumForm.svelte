@@ -1,0 +1,169 @@
+<script>
+    import { push } from "svelte-spa-router";
+    import { getContext } from "svelte";
+    import { StadiumService } from "../services/stadium-service";
+    const stadiumService = getContext("StadiumService");
+
+    let errorMessage;
+    let country;
+    let name;
+    let city;
+    let capacity;
+    let built;
+    let club;
+    let coords = [];
+    let imageFile;
+
+    async function addStadium() {
+        let imageUrl = await stadiumService.uploadStadiumImage(imageFile);
+        const newStadium = {
+            name: name,
+            country: country,
+            city: city,
+            capacity: capacity,
+            built: built,
+            club: club,
+            coords: coords,
+            imageUrl: imageUrl,
+        };
+        let success = await stadiumService.addStadium(newStadium);
+        if (success) {
+            push("/home");
+        } else {
+            errorMessage = "Error adding stadium";
+            country = "";
+            name = "";
+            city = "";
+            capacity = "";
+            built = "";
+            club = "";
+            coords = [];
+            imageFile = "";
+        }
+    }
+</script>
+
+<form on:submit|preventDefault={addStadium} class="uk-form-stacked uk-text-left">
+    <div class="uk-grid uk-grid-stack">
+        <div class="uk-width-expand">
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-stacked-text">Name:</label>
+                <div class="uk-form-controls">
+                    <input
+                        bind:value={name}
+                        class="uk-input"
+                        id="form-stacked-text"
+                        type="text"
+                        name="name"
+                        placeholder="e.g. Nou Camp"
+                    />
+                </div>
+            </div>
+            <div class="uk-grid-small" uk-grid>
+                <div class="uk-width-1-2@s">
+                    <div class="uk-form-label">City:</div>
+                    <input
+                        bind:value={city}
+                        class="uk-input"
+                        id="form-stacked-text"
+                        type="text"
+                        name="city"
+                        placeholder="e.g. Barcelona"
+                    />
+                </div>
+                <div class="uk-width-1-2@s">
+                    <div class="uk-form-label">Country:</div>
+                    <select
+                        bind:value={country}
+                        class="uk-select"
+                        id="form-stacked-text"
+                        name="country"
+                    >
+                        <option value="England">England</option>
+                        <option value="France">France</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Spain">Spain</option>
+                    </select>
+                </div>
+            </div>
+            <div class="uk-margin">
+                <div class="uk-form-label">Capacity:</div>
+                <input
+                    bind:value={capacity}
+                    class="uk-input"
+                    id="form-stacked-text"
+                    type="number"
+                    name="capacity"
+                    placeholder="e.g. 99354"
+                />
+            </div>
+            <div class="uk-margin">
+                <div class="uk-form-label">Year built:</div>
+                <input
+                    bind:value={built}
+                    class="uk-input"
+                    id="form-stacked-text"
+                    type="number"
+                    name="built"
+                    placeholder="e.g. 1957"
+                />
+            </div>
+            <div class="uk-margin">
+                <div class="uk-form-label">Club:</div>
+                <input
+                    bind:value={club}
+                    class="uk-input"
+                    id="form-stacked-text"
+                    type="name"
+                    name="club"
+                    placeholder="e.g. FC Barcelona"
+                />
+            </div>
+            <div class="uk-grid-small" uk-grid>
+                <div class="uk-width-1-2@s">
+                    <div class="uk-form-label">X co-ordinate:</div>
+                    <input
+                        bind:value={coords[0]}
+                        class="uk-input"
+                        id="form-stacked-text"
+                        type="text"
+                        name="xcoord"
+                        placeholder="e.g. 41.381024762375205"
+                    />
+                </div>
+                <div class="uk-width-1-2@s">
+                    <div class="uk-form-label">Y co-ordinate:</div>
+                    <input
+                        bind:value={coords[1]}
+                        class="uk-input"
+                        id="form-stacked-text"
+                        type="text"
+                        name="ycoord"
+                        placeholder="e.g. 2.122776888754896"
+                    />
+                </div>
+            </div>
+            <div class="uk-margin">
+                <div class="uk-form-label">Image (required):</div>
+                <input
+                    bind:value={imageFile}
+                    type="file"
+                    name="imagefile"
+                    accept="image/png, image/jpeg"
+                />
+            </div>
+            <div class="uk-width-1">
+                <div class="uk-margin">
+                    <button
+                        class="submit uk-button uk-button-secondary uk-button-large uk-width-1-1"
+                        >Add Stadium</button
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+    {#if errorMessage}
+        {errorMessage}
+    {/if}
+</form>

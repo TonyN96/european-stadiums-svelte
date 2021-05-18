@@ -8,7 +8,7 @@
     let errorMessage = "";
 
     async function login() {
-        let success = await stadiumService.login(email, password);
+        let success = await stadiumService.loginUser(email, password);
         if (success) {
             push("/home");
         } else {

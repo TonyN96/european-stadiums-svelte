@@ -10,7 +10,7 @@
     let errorMessage = "";
 
     async function signup() {
-        let success = await stadiumService.signup(firstName, lastName, email, password);
+        let success = await stadiumService.signupUser(firstName, lastName, email, password);
         if (success) {
             push("/home");
         } else {

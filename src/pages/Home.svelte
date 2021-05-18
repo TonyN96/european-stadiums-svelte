@@ -1,6 +1,6 @@
 <script>
     import ListStadiums from "../components/ListStadiums.svelte";
-    import { navBar, mainMenu } from "../stores";
+    import { mapsKey, navBar, mainMenu } from "../stores";
     navBar.set({
         bar: mainMenu,
     });
@@ -33,7 +33,7 @@
                 </div>
             </div>
 
-            <ListStadiums country="England" />
+            <ListStadiums country="England" {mapsKey} />
             <ListStadiums country="France" />
             <ListStadiums country="Germany" />
             <ListStadiums country="Italy" />

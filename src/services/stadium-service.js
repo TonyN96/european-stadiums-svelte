@@ -9,7 +9,39 @@ export class StadiumService {
         this.baseUrl = baseUrl;
     }
 
-    async getStadium(id) {
+    /* User services */
+
+    async loginUser(email, password) {
+        try {
+            const response = await axios.post(`${this.baseUrl}/api/users/login`, {
+                email,
+                password,
+            });
+            user.set(response.data);
+            return response.status == 200;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async signupUser(firstName, lastName, email, password) {
+        try {
+            const response = await axios.post(`${this.baseUrl}/api/users/signup`, {
+                firstName,
+                lastName,
+                email,
+                password,
+            });
+            user.set(response.data);
+            return response.status == 200;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    /* Stadium services */
+
+    async findOneStadium(id) {
         try {
             const response = await axios.get(this.baseUrl + "/api/stadiums/" + id);
             this.stadiumList = response.data;
@@ -19,7 +51,7 @@ export class StadiumService {
         }
     }
 
-    async getAllStadiums() {
+    async findAllStadiums() {
         try {
             const response = await axios.get(this.baseUrl + "/api/stadiums");
             this.stadiumList = response.data;
@@ -29,7 +61,7 @@ export class StadiumService {
         }
     }
 
-    async getStadiumsByCountry(country) {
+    async findStadiumByCountry(country) {
         try {
             const response = await axios.get(this.baseUrl + "/api/stadiums/country/" + country);
             this.stadiumList = response.data;
@@ -39,38 +71,28 @@ export class StadiumService {
         }
     }
 
-    async getStadiumLocation(id) {
+    async addStadium(stadium) {
         try {
-            const response = await axios.get(this.baseUrl + "/api/stadiums/location/" + id);
-            this.stadiumList = response.data;
-            return this.stadiumList;
+            const response = await axios.post(this.baseUrl + "/api/stadiums", stadium);
+            return response.data;
         } catch (error) {
-            return [];
+            return null;
         }
     }
 
-    async addStadium(stadium) {
+    async uploadStadiumImage(imageFile) {
         try {
-            const newStadium = {
-                name: stadium.amount,
-                country: stadium.country,
-                city: stadium.city,
-                capacity: stadium.capacity,
-                built: stadium.built,
-                club: stadium.club,
-                coords: stadium.coords,
-            };
-            const response = await axios.post(this.baseUrl + "/api/stadiums/", newStadium);
-            return response.status == 200;
+            const response = await axios.post(this.baseUrl + "/api/stadiums/image", imageFile);
+            return response.data;
         } catch (error) {
-            return false;
+            return null;
         }
     }
 
     async editStadium(id, stadium) {
         try {
             const updatedStadium = {
-                name: stadium.amount,
+                name: stadium.name,
                 country: stadium.country,
                 city: stadium.city,
                 capacity: stadium.capacity,
@@ -85,31 +107,7 @@ export class StadiumService {
         }
     }
 
-    async login(email, password) {
-        try {
-            const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, {
-                email,
-                password,
-            });
-            user.set(response.data);
-            return response.status == 200;
-        } catch (error) {
-            return false;
-        }
-    }
+    async deleteOneStadium(id) {}
 
-    async signup(firstName, lastName, email, password) {
-        try {
-            const response = await axios.post(`${this.baseUrl}/api/users/signup`, {
-                firstName,
-                lastName,
-                email,
-                password,
-            });
-            user.set(response.data);
-            return response.status == 200;
-        } catch (error) {
-            return false;
-        }
-    }
+    async deleteAllStadiums() {}
 }

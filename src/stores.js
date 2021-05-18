@@ -1,5 +1,7 @@
 import { writable } from "svelte/store";
 
+export let mapsKey = `AIzaSyCwZ6L2v5L_OOP2054m0v5hpQwpinZP09U`;
+
 export let welcomeMenu = [
     {
         title: "Signup",
