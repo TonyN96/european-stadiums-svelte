@@ -14,7 +14,8 @@
     onMount(async () => {
         let allStadiums = await stadiumService.findAllStadiums();
         stadiumsCount = allStadiums.length;
-        usersCount = await stadiumService.getUserCount();
+        let allUsers = await stadiumService.findAllUsers();
+        usersCount = allUsers.length;
     });
 </script>
 

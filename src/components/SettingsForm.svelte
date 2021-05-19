@@ -10,6 +10,8 @@
     });
 
     // @ts-ignore
+    let userId = currentUser._id;
+    // @ts-ignore
     let firstName = currentUser.firstName;
     // @ts-ignore
     let lastName = currentUser.lastName;
@@ -85,7 +87,41 @@
     <div class="uk-margin">
         <button class="uk-button uk-button-secondary uk-button-large uk-width-1-1">Save</button>
     </div>
-    {#if errorMessage}
-        {errorMessage}
-    {/if}
 </form>
+
+<button
+    class="uk-button uk-button-large uk-width-1-1"
+    type="button"
+    uk-toggle="target: #delete-modal"
+    style="background-color: red; color: white;">Delete Account</button
+>
+<div id="delete-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Delete Account</h2>
+        <p>Are you sure you want to delete your account?</p>
+        <p class="uk-text-center">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+            <a href="#/delete-user/{userId}"
+                ><button
+                    class="uk-button"
+                    style="background-color: red; color: white;"
+                    type="button">Delete</button
+                ></a
+            >
+        </p>
+    </div>
+</div>
+
+{#if admin}
+    <a href="#/admin-dashboard">
+        <button
+            class="uk-button uk-button-large uk-width-1-1 uk-background-primary uk-margin-top"
+            type="button"
+            style="color: white;">Admin Dashboard</button
+        >
+    </a>
+{/if}
+
+{#if errorMessage}
+    {errorMessage}
+{/if}

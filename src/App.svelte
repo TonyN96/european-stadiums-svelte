@@ -16,6 +16,7 @@
     import Navigator from "./components/Navigator.svelte";
     import Router from "svelte-spa-router";
     import DeleteStadium from "./components/DeleteStadium.svelte";
+    import DeleteUser from "./components/DeleteUser.svelte";
 
     setContext("StadiumService", new StadiumService("http://localhost:4000"));
 
@@ -29,6 +30,7 @@
         "/delete-stadium/:id": DeleteStadium,
         "/logout": Main,
         "/settings": Settings,
+        "/delete-user/:id": DeleteUser,
         "/admin-dashboard": AdminDashboard,
     };
 </script>

@@ -58,9 +58,18 @@ export class StadiumService {
         }
     }
 
-    async getUserCount() {
+    async findAllUsers() {
         try {
-            const response = await axios.get(this.baseUrl + "/api/users/count");
+            const response = await axios.get(this.baseUrl + "/api/users");
+            return response.data;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    async deleteOneUser(userId) {
+        try {
+            const response = await axios.delete(this.baseUrl + "/api/users/" + userId);
             return response.data;
         } catch (error) {
             return null;
