@@ -39,6 +39,25 @@ export class StadiumService {
         }
     }
 
+    async editUser(userId, newDetails) {
+        try {
+            const response = await axios.post(this.baseUrl + "/api/users/" + userId, newDetails);
+            user.set(response.data);
+            return response.status == 201;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async getUserNameById(userId) {
+        try {
+            const response = await axios.get(this.baseUrl + "/api/users/name/" + userId);
+            return response.data;
+        } catch (error) {
+            return false;
+        }
+    }
+
     /* Stadium services */
 
     async findOneStadium(id) {
@@ -74,15 +93,7 @@ export class StadiumService {
     async addStadium(stadium) {
         try {
             const response = await axios.post(this.baseUrl + "/api/stadiums", stadium);
-            return response.data;
-        } catch (error) {
-            return null;
-        }
-    }
-
-    async uploadStadiumImage(imageFile) {
-        try {
-            const response = await axios.post(this.baseUrl + "/api/stadiums/image", imageFile);
+            console.log(response);
             return response.data;
         } catch (error) {
             return null;

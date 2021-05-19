@@ -34,10 +34,10 @@
             </div>
 
             <ListStadiums country="England" {mapsKey} />
-            <ListStadiums country="France" />
-            <ListStadiums country="Germany" />
-            <ListStadiums country="Italy" />
-            <ListStadiums country="Spain" />
+            <ListStadiums country="France" {mapsKey} />
+            <ListStadiums country="Germany" {mapsKey} />
+            <ListStadiums country="Italy" {mapsKey} />
+            <ListStadiums country="Spain" {mapsKey} />
         </div>
     </div>
 </div>

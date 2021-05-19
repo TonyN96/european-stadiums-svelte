@@ -1,9 +1,16 @@
 <script>
     import { push } from "svelte-spa-router";
     import { getContext } from "svelte";
-    import { StadiumService } from "../services/stadium-service";
+    import { user } from "../stores.js";
     const stadiumService = getContext("StadiumService");
 
+    let currentUser;
+    user.subscribe((value) => {
+        currentUser = value;
+    });
+
+    // @ts-ignore
+    let userId = currentUser._id;
     let errorMessage;
     let country;
     let name;
@@ -12,10 +19,11 @@
     let built;
     let club;
     let coords = [];
-    let imageFile;
+    let imageUrl =
+        "https://res.cloudinary.com/dczqccpne/image/upload/v1621413715/fqp_placeholder_jcy91d.jpg";
 
     async function addStadium() {
-        let imageUrl = await stadiumService.uploadStadiumImage(imageFile);
+        console.log(userId);
         const newStadium = {
             name: name,
             country: country,
@@ -25,6 +33,7 @@
             club: club,
             coords: coords,
             imageUrl: imageUrl,
+            userId: userId,
         };
         let success = await stadiumService.addStadium(newStadium);
         if (success) {
@@ -38,7 +47,6 @@
             built = "";
             club = "";
             coords = [];
-            imageFile = "";
         }
     }
 </script>
@@ -144,7 +152,7 @@
                     />
                 </div>
             </div>
-            <div class="uk-margin">
+            <!-- <div class="uk-margin">
                 <div class="uk-form-label">Image (required):</div>
                 <input
                     bind:value={imageFile}
@@ -152,8 +160,8 @@
                     name="imagefile"
                     accept="image/png, image/jpeg"
                 />
-            </div>
-            <div class="uk-width-1">
+            </div> -->
+            <div class="uk-width-1 uk-margin">
                 <div class="uk-margin">
                     <button
                         class="submit uk-button uk-button-secondary uk-button-large uk-width-1-1"

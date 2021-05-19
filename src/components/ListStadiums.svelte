@@ -7,6 +7,10 @@
     let stadiumList = [];
     onMount(async () => {
         stadiumList = await stadiumService.findStadiumByCountry(country);
+        for (let x = 0; x < stadiumList.length; x++) {
+            let userId = stadiumList[x].addedBy;
+            stadiumList[x].addedBy = await stadiumService.getUserNameById(userId);
+        }
     });
 </script>
 
@@ -36,10 +40,9 @@
             </div>
 
             <div class="uk-width-expand uk-flex uk-flex-between uk-flex-bottom">
-                <!-- <div class="uk-text-meta">
-                    Added by: {stadium.addedBy.firstName}
-                    {stadium.addedBy.lastName}
-                </div> -->
+                <div class="uk-text-meta">
+                    Added by: {stadium.addedBy}
+                </div>
 
                 <div>
                     <div class="uk-inline" style="vertical-align: baseline;" uk-lightbox>
