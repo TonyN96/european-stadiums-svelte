@@ -23,7 +23,6 @@
         "https://res.cloudinary.com/dczqccpne/image/upload/v1621413715/fqp_placeholder_jcy91d.jpg";
 
     async function addStadium() {
-        console.log(userId);
         const newStadium = {
             name: name,
             country: country,

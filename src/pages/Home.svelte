@@ -1,8 +1,20 @@
 <script>
+    import { getContext, onMount } from "svelte";
     import ListStadiums from "../components/ListStadiums.svelte";
-    import { mapsKey, navBar, mainMenu } from "../stores";
+    import { navBar, mainMenu } from "../stores";
+    const stadiumService = getContext("StadiumService");
+
     navBar.set({
         bar: mainMenu,
+    });
+
+    let stadiumsCount;
+    let usersCount;
+
+    onMount(async () => {
+        let allStadiums = await stadiumService.findAllStadiums();
+        stadiumsCount = allStadiums.length;
+        usersCount = await stadiumService.getUserCount();
     });
 </script>
 
@@ -17,12 +29,12 @@
                     add new stadiums or update/remove existing stadiums.
                 </p>
 
-                <!-- <p class="uk-inline uk-text-muted uk-margin-right uk-margin-remove-top">
+                <p class="uk-inline uk-text-muted uk-margin-right uk-margin-remove-top">
                     Stadiums: {stadiumsCount}
                 </p>
                 <p class="uk-inline uk-text-muted uk-margin-left uk-margin-remove-top">
                     Users: {usersCount}
-                </p> -->
+                </p>
 
                 <div
                     class="uk-width-expand uk-margin-large-bottom uk-margin-small-top uk-text-center"
@@ -33,11 +45,11 @@
                 </div>
             </div>
 
-            <ListStadiums country="England" {mapsKey} />
-            <ListStadiums country="France" {mapsKey} />
-            <ListStadiums country="Germany" {mapsKey} />
-            <ListStadiums country="Italy" {mapsKey} />
-            <ListStadiums country="Spain" {mapsKey} />
+            <ListStadiums country="England" />
+            <ListStadiums country="France" />
+            <ListStadiums country="Germany" />
+            <ListStadiums country="Italy" />
+            <ListStadiums country="Spain" />
         </div>
     </div>
 </div>

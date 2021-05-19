@@ -15,6 +15,7 @@
     // Components
     import Navigator from "./components/Navigator.svelte";
     import Router from "svelte-spa-router";
+    import DeleteStadium from "./components/DeleteStadium.svelte";
 
     setContext("StadiumService", new StadiumService("http://localhost:4000"));
 
@@ -24,7 +25,8 @@
         "/signup": Signup,
         "/home": Home,
         "/add-stadium": AddStadium,
-        "/edit-stadium": EditStadium,
+        "/edit-stadium/:id": EditStadium,
+        "/delete-stadium/:id": DeleteStadium,
         "/logout": Main,
         "/settings": Settings,
         "/admin-dashboard": AdminDashboard,

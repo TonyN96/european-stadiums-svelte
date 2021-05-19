@@ -58,6 +58,15 @@ export class StadiumService {
         }
     }
 
+    async getUserCount() {
+        try {
+            const response = await axios.get(this.baseUrl + "/api/users/count");
+            return response.data;
+        } catch (error) {
+            return null;
+        }
+    }
+
     /* Stadium services */
 
     async findOneStadium(id) {
@@ -93,7 +102,6 @@ export class StadiumService {
     async addStadium(stadium) {
         try {
             const response = await axios.post(this.baseUrl + "/api/stadiums", stadium);
-            console.log(response);
             return response.data;
         } catch (error) {
             return null;
@@ -112,13 +120,27 @@ export class StadiumService {
                 coords: stadium.coords,
             };
             const response = await axios.post(this.baseUrl + "/api/stadiums/" + id, updatedStadium);
-            return response.status == 200;
+            return response.status == 201;
         } catch (error) {
             return false;
         }
     }
 
-    async deleteOneStadium(id) {}
+    async getMapsKey() {
+        try {
+            const response = await axios.get(this.baseUrl + "/api/stadiums/mapsKey");
+            return response.data;
+        } catch (error) {
+            return null;
+        }
+    }
 
-    async deleteAllStadiums() {}
+    async deleteOneStadium(id) {
+        try {
+            const response = await axios.delete(this.baseUrl + "/api/stadiums/" + id);
+            return response.data;
+        } catch (error) {
+            return null;
+        }
+    }
 }

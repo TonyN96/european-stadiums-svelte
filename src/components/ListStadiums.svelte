@@ -1,11 +1,12 @@
 <script>
     import { getContext, onMount } from "svelte";
-
-    const stadiumService = getContext("StadiumService");
     export let country;
-    export let mapsKey;
+    const stadiumService = getContext("StadiumService");
+    let mapsKey;
     let stadiumList = [];
+
     onMount(async () => {
+        mapsKey = await stadiumService.getMapsKey();
         stadiumList = await stadiumService.findStadiumByCountry(country);
         for (let x = 0; x < stadiumList.length; x++) {
             let userId = stadiumList[x].addedBy;
@@ -72,7 +73,7 @@
                             uk-tooltip
                         />
                     </div>
-                    <a href="/edit-stadium/{stadium._id}"
+                    <a href="#/edit-stadium/{stadium._id}"
                         ><i
                             class="fas fa-edit"
                             style="color: rgba(50, 137, 219, 0.829); font-size: 24px;"
