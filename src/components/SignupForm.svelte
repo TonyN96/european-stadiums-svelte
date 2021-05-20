@@ -3,21 +3,25 @@
     import { getContext } from "svelte";
     const stadiumService = getContext("StadiumService");
 
-    let firstName = "";
-    let lastName = "";
-    let email = "";
-    let password = "";
     let errorMessage = "";
 
+    let newUser = {
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        admin: false,
+    };
+
     async function signup() {
-        let success = await stadiumService.signupUser(firstName, lastName, email, password);
+        let success = await stadiumService.createUser(newUser);
         if (success) {
             push("/home");
         } else {
-            firstName = "";
-            lastName = "";
-            email = "";
-            password = "";
+            newUser.firstName = "";
+            newUser.lastName = "";
+            newUser.email = "";
+            newUser.password = "";
             errorMessage = "Invalid Credentials";
         }
     }
@@ -29,7 +33,7 @@
         <div class="uk-inline uk-width-1-1">
             <span class="uk-form-icon" uk-icon="icon: user" />
             <input
-                bind:value={firstName}
+                bind:value={newUser.firstName}
                 class="uk-input uk-form-large"
                 type="text"
                 name="firstName"
@@ -41,7 +45,7 @@
         <div class="uk-inline uk-width-1-1">
             <span class="uk-form-icon" uk-icon="icon: user" />
             <input
-                bind:value={lastName}
+                bind:value={newUser.lastName}
                 class="uk-input uk-form-large"
                 type="text"
                 name="lastName"
@@ -52,7 +56,12 @@
         <label class="uk-form-label" for="form-stacked-text">Email:</label>
         <div class="uk-inline uk-width-1-1">
             <span class="uk-form-icon" uk-icon="icon: mail" />
-            <input bind:value={email} class="uk-input uk-form-large" type="text" name="email" />
+            <input
+                bind:value={newUser.email}
+                class="uk-input uk-form-large"
+                type="text"
+                name="email"
+            />
         </div>
     </div>
     <div class="uk-margin uk-text-left">
@@ -60,7 +69,7 @@
         <div class="uk-inline uk-width-1-1">
             <span class="uk-form-icon" uk-icon="icon: lock" />
             <input
-                bind:value={password}
+                bind:value={newUser.password}
                 class="uk-input uk-form-large"
                 type="password"
                 name="password"

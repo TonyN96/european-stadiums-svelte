@@ -11,29 +11,26 @@ export class StadiumService {
 
     /* User services */
 
-    async loginUser(email, password) {
+    async authenticate(email, password) {
         try {
-            const response = await axios.post(`${this.baseUrl}/api/users/login`, {
+            const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, {
                 email,
                 password,
             });
-            user.set(response.data);
-            return response.status == 200;
+            axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
+            user.set(response.data.user);
+            return response.status == 201;
         } catch (error) {
             return false;
         }
     }
 
-    async signupUser(firstName, lastName, email, password) {
+    async createUser(newUser) {
         try {
-            const response = await axios.post(`${this.baseUrl}/api/users/signup`, {
-                firstName,
-                lastName,
-                email,
-                password,
-            });
-            user.set(response.data);
-            return response.status == 200;
+            const response = await axios.post(`${this.baseUrl}/api/users`, newUser);
+            axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
+            user.set(response.data.user);
+            return response;
         } catch (error) {
             return false;
         }
