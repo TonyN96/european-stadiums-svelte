@@ -3,6 +3,7 @@ import { user } from "../stores.js";
 
 export class StadiumService {
     stadiumList = [];
+    reviewsList = [];
     baseUrl = "";
 
     constructor(baseUrl) {
@@ -144,6 +145,34 @@ export class StadiumService {
     async deleteOneStadium(id) {
         try {
             const response = await axios.delete(this.baseUrl + "/api/stadiums/" + id);
+            return response.data;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    async findAllReviews() {
+        try {
+            const response = await axios.get(this.baseUrl + "/api/reviews");
+            return response.data;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    async findReviewsByStadium(stadiumId) {
+        try {
+            const response = await axios.get(this.baseUrl + "/api/reviews/" + stadiumId);
+            this.reviewsList = response.data;
+            return this.reviewsList;
+        } catch (error) {
+            return [];
+        }
+    }
+
+    async getStadiumRating(stadiumId) {
+        try {
+            const response = await axios.get(this.baseUrl + "/api/stadiums/rating/" + stadiumId);
             return response.data;
         } catch (error) {
             return null;
