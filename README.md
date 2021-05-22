@@ -33,6 +33,7 @@ This app is based on the server-rendered version of the app and makes use of it'
 ## Usage
 
 Having access to the API from the [server-rendered version](https://github.com/TonyN96/european-stadiums) of this app is a prerequisite.
+By default the app is set to fetch API calls from the [Heroku version](https://european-stadiums.herokuapp.com/) of the server-rendered app.
 
 ```
 # Clone the repository:
@@ -43,13 +44,9 @@ $ cd european-stadiums-svelte
 
 # Install dependencies
 $ npm install
-```
 
-Ensure that StadiumService in App.svelte is set to listen on an appropriate port that gives access to the API.
-
-```
 # Run the app
-$ npm start
+$ npm run dev
 ```
 
 ![Screenshot](public/screenshot.png)
