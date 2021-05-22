@@ -13,6 +13,7 @@
 
     <div class="uk-navbar-right">
         <ul class="uk-navbar-nav">
+            <!-- Each loop which populates the nav bar with navBar from stores -->
             {#each $navBar.bar as nav}
                 <li>
                     <a href={nav.link}>

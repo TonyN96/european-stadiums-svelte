@@ -6,19 +6,26 @@
     let stadiumList = [];
 
     onMount(async () => {
+        // Get google maps key for loading map lightboxes
         mapsKey = await stadiumService.getMapsKey();
+        // Find stadiums by country passed in to component
         stadiumList = await stadiumService.findStadiumByCountry(country);
         for (let x = 0; x < stadiumList.length; x++) {
+            // Populate reviews array for each stadium using external stadiumService function
             stadiumList[x].reviews = await stadiumService.findReviewsByStadium(stadiumList[x]._id);
+            // Populate rating for each stadium using external stadiumService function
             stadiumList[x].rating = await stadiumService.getStadiumRating(stadiumList[x]._id);
             for (let y = 0; y < stadiumList.length; y++) {
+                // Create new date object for each stadium review
                 let reviewDate = new Date(stadiumList[x].reviews[y].date);
+                // Format each date object in each stadium review
                 let reviewDateStr =
                     ("0" + reviewDate.getDate()).slice(-2) +
                     "-" +
                     ("0" + (reviewDate.getMonth() + 1)).slice(-2) +
                     "-" +
                     reviewDate.getFullYear();
+                // Set the review date to the formatted date string
                 stadiumList[x].reviews[y].date = reviewDateStr;
             }
         }

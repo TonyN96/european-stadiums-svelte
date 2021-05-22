@@ -9,6 +9,7 @@
         currentUser = value;
     });
 
+    // Getting the details of the user from stores and assigning them to properties
     // @ts-ignore
     let userId = currentUser._id;
     // @ts-ignore
@@ -31,14 +32,16 @@
             admin: admin,
         };
         let success = await stadiumService.editUser(currentUser._id, newUser);
+        // If updating of details is successful, redirect to home
+        // Else reset the form fields and inform the user of error
         if (success) {
             push("/home");
         } else {
-            firstName = "";
-            lastName = "";
-            email = "";
+            firstName = currentUser._id;
+            lastName = currentUser.firstName;
+            email = currentUser.lastName;
             password = "";
-            admin = "";
+            admin = currentUser.admin;
             errorMessage = "Error updating details";
         }
     }

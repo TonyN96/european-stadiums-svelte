@@ -12,40 +12,39 @@
     // @ts-ignore
     let userId = currentUser._id;
     let errorMessage;
-    let country;
-    let name;
-    let city;
-    let capacity;
-    let built;
-    let club;
-    let coords = [];
+
+    // Image upload feature not incorporated in Svelte version - default image used instead
     let imageUrl =
         "https://res.cloudinary.com/dczqccpne/image/upload/v1621413715/fqp_placeholder_jcy91d.jpg";
 
+    // Porperties of stadium binded to form values
+    let newStadium = {
+        country: "",
+        name: "",
+        city: "",
+        capacity: "",
+        built: "",
+        club: "",
+        coords: [],
+        imageUrl: imageUrl,
+    };
+
+    // Function called to add new stadium
     async function addStadium() {
-        const newStadium = {
-            name: name,
-            country: country,
-            city: city,
-            capacity: capacity,
-            built: built,
-            club: club,
-            coords: coords,
-            imageUrl: imageUrl,
-            userId: userId,
-        };
         let success = await stadiumService.addStadium(newStadium);
+        // If adding stadium was successful, redirect to home
+        // Else reset input fields in form
         if (success) {
             push("/home");
         } else {
             errorMessage = "Error adding stadium";
-            country = "";
-            name = "";
-            city = "";
-            capacity = "";
-            built = "";
-            club = "";
-            coords = [];
+            newStadium.country = "";
+            newStadium.name = "";
+            newStadium.city = "";
+            newStadium.capacity = "";
+            newStadium.built = "";
+            newStadium.club = "";
+            newStadium.coords = [];
         }
     }
 </script>
@@ -57,7 +56,7 @@
                 <label class="uk-form-label" for="form-stacked-text">Name:</label>
                 <div class="uk-form-controls">
                     <input
-                        bind:value={name}
+                        bind:value={newStadium.name}
                         class="uk-input"
                         id="form-stacked-text"
                         type="text"
@@ -70,7 +69,7 @@
                 <div class="uk-width-1-2@s">
                     <div class="uk-form-label">City:</div>
                     <input
-                        bind:value={city}
+                        bind:value={newStadium.city}
                         class="uk-input"
                         id="form-stacked-text"
                         type="text"
@@ -81,12 +80,12 @@
                 <div class="uk-width-1-2@s">
                     <div class="uk-form-label">Country:</div>
                     <select
-                        bind:value={country}
+                        bind:value={newStadium.country}
                         class="uk-select"
                         id="form-stacked-text"
                         name="country"
                     >
-                        <option value="England">England</option>
+                        <option value="England" selected>England</option>
                         <option value="France">France</option>
                         <option value="Germany">Germany</option>
                         <option value="Italy">Italy</option>
@@ -97,7 +96,7 @@
             <div class="uk-margin">
                 <div class="uk-form-label">Capacity:</div>
                 <input
-                    bind:value={capacity}
+                    bind:value={newStadium.capacity}
                     class="uk-input"
                     id="form-stacked-text"
                     type="number"
@@ -108,7 +107,7 @@
             <div class="uk-margin">
                 <div class="uk-form-label">Year built:</div>
                 <input
-                    bind:value={built}
+                    bind:value={newStadium.built}
                     class="uk-input"
                     id="form-stacked-text"
                     type="number"
@@ -119,7 +118,7 @@
             <div class="uk-margin">
                 <div class="uk-form-label">Club:</div>
                 <input
-                    bind:value={club}
+                    bind:value={newStadium.club}
                     class="uk-input"
                     id="form-stacked-text"
                     type="name"
@@ -131,7 +130,7 @@
                 <div class="uk-width-1-2@s">
                     <div class="uk-form-label">X co-ordinate:</div>
                     <input
-                        bind:value={coords[0]}
+                        bind:value={newStadium.coords[0]}
                         class="uk-input"
                         id="form-stacked-text"
                         type="text"
@@ -142,7 +141,7 @@
                 <div class="uk-width-1-2@s">
                     <div class="uk-form-label">Y co-ordinate:</div>
                     <input
-                        bind:value={coords[1]}
+                        bind:value={newStadium.coords[1]}
                         class="uk-input"
                         id="form-stacked-text"
                         type="text"
@@ -151,15 +150,6 @@
                     />
                 </div>
             </div>
-            <!-- <div class="uk-margin">
-                <div class="uk-form-label">Image (required):</div>
-                <input
-                    bind:value={imageFile}
-                    type="file"
-                    name="imagefile"
-                    accept="image/png, image/jpeg"
-                />
-            </div> -->
             <div class="uk-width-1 uk-margin">
                 <div class="uk-margin">
                     <button

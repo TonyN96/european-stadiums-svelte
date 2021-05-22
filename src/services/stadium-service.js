@@ -151,6 +151,8 @@ export class StadiumService {
         }
     }
 
+    /* Review services */
+
     async findAllReviews() {
         try {
             const response = await axios.get(this.baseUrl + "/api/reviews");

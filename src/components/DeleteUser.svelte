@@ -16,6 +16,8 @@
 
     onMount(async () => {
         await stadiumService.deleteOneUser(userId);
+        // If deleted was the current user, redirect to landing page
+        // Else redirect to admin dashboard as user must have been an admin
         if (userId == currentUserId) {
             push("/");
         } else {

@@ -9,6 +9,8 @@
 
     async function login() {
         let success = await stadiumService.authenticate(email, password);
+        // If login is successful, redirect to home
+        // Else reset email and password fields and inform the user of error
         if (success) {
             push("/home");
         } else {

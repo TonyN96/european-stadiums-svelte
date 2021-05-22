@@ -5,6 +5,7 @@
     export let stadiumId;
 
     let errorMessage;
+    // Properties of stadium binded to edit stadium form
     let country;
     let name;
     let city;
@@ -12,8 +13,9 @@
     let built;
     let club;
     let coords = [];
-    let imageUrl = "";
+    let imageUrl;
 
+    // Function used to set default form values to staidums existing details
     async function setDefaultValues() {
         let stadium = await stadiumService.findOneStadium(stadiumId);
         country = stadium.country;
@@ -26,10 +28,12 @@
         imageUrl = stadium.imageUrl;
     }
 
+    // Default values set on page load
     onMount(async () => {
         setDefaultValues();
     });
 
+    // Function called to edit a stadium
     async function editStadium() {
         const newDetails = {
             name: name,
@@ -42,6 +46,8 @@
             imageUrl: imageUrl,
         };
         let success = await stadiumService.editStadium(stadiumId, newDetails);
+        // If stadium was edited successfully, redirect to home
+        // Else reset values to default and inform the user of error
         if (success) {
             push("/home");
         } else {
