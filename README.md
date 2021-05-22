@@ -26,6 +26,7 @@ This app is based on the server-rendered version of the app and makes use of it'
 
 - HTML, JavaScript, CSS
 - Svelte
+- [ViteJS](https://vitejs.dev/)
 - [UIKit](https://getuikit.com/)
 - [svelte-spa-router](https://www.npmjs.com/package/svelte-spa-router)
 

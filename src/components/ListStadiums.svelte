@@ -163,3 +163,13 @@
         </div>
     {/each}
 </div>
+
+<style>
+    .stadium-thumbnail {
+        height: 150px;
+        width: 100%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+</style>
