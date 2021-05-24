@@ -2,12 +2,10 @@
     import { push } from "svelte-spa-router";
     import { getContext } from "svelte";
     import { user } from "../stores.js";
+    import { get } from "svelte/store";
     const stadiumService = getContext("StadiumService");
 
-    let currentUser;
-    user.subscribe((value) => {
-        currentUser = value;
-    });
+    let currentUser = get(user);
 
     // Getting the details of the user from stores and assigning them to properties
     // @ts-ignore
@@ -41,7 +39,6 @@
             lastName = currentUser.firstName;
             email = currentUser.lastName;
             password = "";
-            admin = currentUser.admin;
             errorMessage = "Error updating details";
         }
     }

@@ -1,5 +1,7 @@
 import axios from "axios";
 import { user } from "../stores.js";
+import { stadiums } from "../stores.js";
+import { get } from "svelte/store";
 
 export class StadiumService {
     stadiumList = [];
@@ -8,6 +10,10 @@ export class StadiumService {
 
     constructor(baseUrl) {
         this.baseUrl = baseUrl;
+        if (localStorage.stadium) {
+            axios.defaults.headers.common["Authorization"] =
+                "Bearer " + JSON.parse(localStorage.stadium);
+        }
     }
 
     /* User services */
@@ -19,7 +25,15 @@ export class StadiumService {
                 password,
             });
             axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
-            user.set(response.data.user);
+            user.set({
+                firstName: response.data.user.firstName,
+                lastName: response.data.user.lastName,
+                email: email,
+                password: password,
+                _id: response.data.user._id,
+                token: response.data.token,
+            });
+            localStorage.stadium = JSON.stringify(response.data.token);
             return response.status == 201;
         } catch (error) {
             return false;
@@ -30,18 +44,47 @@ export class StadiumService {
         try {
             const response = await axios.post(`${this.baseUrl}/api/users`, newUser);
             axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
-            user.set(response.data.user);
+            user.set({
+                firstName: response.data.user.firstName,
+                lastName: response.data.user.lastName,
+                email: response.data.user.email,
+                password: response.data.user.password,
+                _id: response.data.user._id,
+                token: response.data.token,
+            });
+            localStorage.stadium = JSON.stringify(response.data.token);
             return response;
         } catch (error) {
             return false;
         }
     }
 
+    async logout() {
+        user.set({
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: "",
+            _id: "",
+            token: "",
+        });
+        axios.defaults.headers.common["Authorization"] = "";
+        localStorage.stadium = null;
+    }
+
     async editUser(userId, newDetails) {
         try {
             const response = await axios.post(this.baseUrl + "/api/users/" + userId, newDetails);
-            user.set(response.data);
-            return response.status == 201;
+            user.set({
+                firstName: response.data.user.firstName,
+                lastName: response.data.user.lastName,
+                email: response.data.user.email,
+                password: response.data.user.password,
+                _id: response.data.user._id,
+                token: response.data.token,
+            });
+            console.log(response);
+            return response;
         } catch (error) {
             return false;
         }
