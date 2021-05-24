@@ -2,15 +2,11 @@
     import { push } from "svelte-spa-router";
     import { getContext } from "svelte";
     import { user } from "../stores.js";
+    import { get } from "svelte/store";
     const stadiumService = getContext("StadiumService");
 
-    let currentUser;
-    user.subscribe((value) => {
-        currentUser = value;
-    });
+    let currentUser = get(user);
 
-    // @ts-ignore
-    let userId = currentUser._id;
     let errorMessage;
 
     // Image upload feature not incorporated in Svelte version - default image used instead
@@ -19,7 +15,7 @@
 
     // Porperties of stadium binded to form values
     let newStadium = {
-        country: "",
+        country: "England",
         name: "",
         city: "",
         capacity: "",
@@ -27,6 +23,7 @@
         club: "",
         coords: [],
         imageUrl: imageUrl,
+        addedBy: currentUser._id,
     };
 
     // Function called to add new stadium
@@ -85,7 +82,7 @@
                         id="form-stacked-text"
                         name="country"
                     >
-                        <option value="England" selected>England</option>
+                        <option value="England">England</option>
                         <option value="France">France</option>
                         <option value="Germany">Germany</option>
                         <option value="Italy">Italy</option>

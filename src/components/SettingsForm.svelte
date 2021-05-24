@@ -2,12 +2,10 @@
     import { push } from "svelte-spa-router";
     import { getContext } from "svelte";
     import { user } from "../stores.js";
+    import { get } from "svelte/store";
     const stadiumService = getContext("StadiumService");
 
-    let currentUser;
-    user.subscribe((value) => {
-        currentUser = value;
-    });
+    let currentUser = get(user);
 
     // Getting the details of the user from stores and assigning them to properties
     // @ts-ignore
@@ -41,7 +39,6 @@
             lastName = currentUser.firstName;
             email = currentUser.lastName;
             password = "";
-            admin = currentUser.admin;
             errorMessage = "Error updating details";
         }
     }
@@ -98,6 +95,17 @@
     uk-toggle="target: #delete-modal"
     style="background-color: red; color: white;">Delete Account</button
 >
+
+{#if admin}
+    <a href="#/admin-dashboard">
+        <button
+            class="uk-button uk-button-large uk-width-1-1 uk-background-primary uk-margin-top"
+            type="button"
+            style="color: white;">Admin Dashboard</button
+        >
+    </a>
+{/if}
+
 <div id="delete-modal" uk-modal>
     <div class="uk-modal-dialog uk-modal-body">
         <h2 class="uk-modal-title">Delete Account</h2>
@@ -114,16 +122,6 @@
         </p>
     </div>
 </div>
-
-{#if admin}
-    <a href="#/admin-dashboard">
-        <button
-            class="uk-button uk-button-large uk-width-1-1 uk-background-primary uk-margin-top"
-            type="button"
-            style="color: white;">Admin Dashboard</button
-        >
-    </a>
-{/if}
 
 {#if errorMessage}
     {errorMessage}

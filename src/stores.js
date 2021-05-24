@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { writable } from "svelte-local-storage-store";
 
 export let mapsKey = `AIzaSyCwZ6L2v5L_OOP2054m0v5hpQwpinZP09U`;
 
@@ -44,14 +44,18 @@ export const mainMenu = [
     },
 ];
 
-export const user = writable({
+export const user = writable("user", {
+    _id: "",
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-    _id: "",
+    admin: false,
+    token: "",
 });
 
-export const navBar = writable({
+export const stadiums = writable("stadiums", []);
+
+export const navBar = writable("navBar", {
     bar: [],
 });
