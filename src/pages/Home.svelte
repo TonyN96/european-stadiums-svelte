@@ -2,6 +2,8 @@
     import { getContext, onMount } from "svelte";
     import ListStadiums from "../components/ListStadiums.svelte";
     import { navBar, mainMenu } from "../stores";
+    import "leaflet/dist/leaflet.css";
+    import { LeafletMap } from "../services/leaflet-maps";
     const stadiumService = getContext("StadiumService");
 
     navBar.set({
@@ -10,12 +12,35 @@
 
     let stadiumsCount;
     let usersCount;
+    let map;
 
     onMount(async () => {
         let allStadiums = await stadiumService.findAllStadiums();
-        stadiumsCount = allStadiums.length;
         let allUsers = await stadiumService.findAllUsers();
+
+        const mapConfig = {
+            location: { lat: 48.630117, lng: 5.607379 },
+            zoom: 4,
+            minZoom: 0,
+        };
+        map = new LeafletMap("stadium-map", mapConfig, "Terrain");
+        map.showZoomControl();
+        for (let x = 0; x < allStadiums.length; x++) {
+            map.addMarker(
+                { lat: allStadiums[x].coords[0], lng: allStadiums[x].coords[1] },
+                allStadiums[x].name +
+                    "<br>" +
+                    allStadiums[x].city +
+                    ", " +
+                    allStadiums[x].country +
+                    '<br><br><img src= "' +
+                    allStadiums[x].imageUrl +
+                    '">'
+            );
+        }
+
         usersCount = allUsers.length;
+        stadiumsCount = allStadiums.length;
     });
 </script>
 
@@ -45,6 +70,8 @@
                     </a>
                 </div>
             </div>
+
+            <div id="stadium-map" class="ui embed" style="height:400px" />
 
             <ListStadiums country="England" />
             <ListStadiums country="France" />
