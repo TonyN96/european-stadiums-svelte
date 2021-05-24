@@ -26,11 +26,12 @@ export class StadiumService {
             });
             axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
             user.set({
+                _id: response.data.user._id,
                 firstName: response.data.user.firstName,
                 lastName: response.data.user.lastName,
                 email: email,
                 password: password,
-                _id: response.data.user._id,
+                admin: response.data.user.admin,
                 token: response.data.token,
             });
             localStorage.stadium = JSON.stringify(response.data.token);
@@ -45,11 +46,12 @@ export class StadiumService {
             const response = await axios.post(`${this.baseUrl}/api/users`, newUser);
             axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
             user.set({
+                _id: response.data.user._id,
                 firstName: response.data.user.firstName,
                 lastName: response.data.user.lastName,
                 email: response.data.user.email,
                 password: response.data.user.password,
-                _id: response.data.user._id,
+                admin: response.data.user.admin,
                 token: response.data.token,
             });
             localStorage.stadium = JSON.stringify(response.data.token);
@@ -61,11 +63,12 @@ export class StadiumService {
 
     async logout() {
         user.set({
+            _id: "",
             firstName: "",
             lastName: "",
             email: "",
             password: "",
-            _id: "",
+            admin: false,
             token: "",
         });
         axios.defaults.headers.common["Authorization"] = "";
@@ -76,14 +79,14 @@ export class StadiumService {
         try {
             const response = await axios.post(this.baseUrl + "/api/users/" + userId, newDetails);
             user.set({
+                _id: response.data.user._id,
                 firstName: response.data.user.firstName,
                 lastName: response.data.user.lastName,
                 email: response.data.user.email,
                 password: response.data.user.password,
-                _id: response.data.user._id,
+                admin: response.data.user.admin,
                 token: response.data.token,
             });
-            console.log(response);
             return response;
         } catch (error) {
             return false;

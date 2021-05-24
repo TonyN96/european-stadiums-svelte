@@ -45,11 +45,12 @@ export const mainMenu = [
 ];
 
 export const user = writable("user", {
+    _id: "",
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-    _id: "",
+    admin: false,
     token: "",
 });
 
