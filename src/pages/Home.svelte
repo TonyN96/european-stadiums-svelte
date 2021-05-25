@@ -33,6 +33,8 @@
     onMount(async () => {
         let allUsers = await stadiumService.findAllUsers();
         let allStadiums = await stadiumService.findAllStadiums();
+        usersCount = allUsers.length;
+        stadiumsCount = allStadiums.length;
         for (let x = 0; x < allStadiums.length; x++) {
             allStadiums[x].reviews = await stadiumService.findReviewsByStadium(allStadiums[x]._id);
             // Populate rating for each stadium using external stadiumService function
@@ -58,10 +60,10 @@
             }
         }
         stadiums.set(allStadiums);
-
+        // Using categoriseStadiums function to categorise stadiums by country
         let categoriseResult = await categoriseStadiums(allStadiums);
         categorisedStadiums = categoriseResult;
-
+        // Leaflet map configuration
         const mapConfig = {
             scrollWheelZoom: false,
             location: { lat: 48.630117, lng: 5.607379 },
@@ -70,6 +72,7 @@
         };
         map = new LeafletMap("stadium-map", mapConfig, "Terrain");
         map.showZoomControl();
+        // For loop which adds a marker for each stadium to the map
         for (let x = 0; x < allStadiums.length; x++) {
             map.addMarker(
                 { lat: allStadiums[x].coords[0], lng: allStadiums[x].coords[1] },
@@ -83,9 +86,6 @@
                     '">'
             );
         }
-
-        usersCount = allUsers.length;
-        stadiumsCount = allStadiums.length;
     });
 </script>
 

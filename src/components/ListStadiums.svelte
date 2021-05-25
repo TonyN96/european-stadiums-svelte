@@ -84,11 +84,10 @@
             <div id="reviews-modal-{stadium._id}" uk-modal>
                 <div class="uk-modal-dialog uk-modal-body">
                     <h2 class="uk-modal-title">{stadium.name} Reviews</h2>
+                    <hr>
                     {#if stadium.reviews.length > 0}
                         {#each stadium.reviews as review}
-                            <div
-                                class="uk-flex uk-flex-between uk-flex-middle uk-margin-medium-top"
-                            >
+                        <div class="uk-flex uk-flex-between uk-flex-middle uk-margin-top">
                                 <div class="uk-text-large">{review.title}</div>
                                 <div class="uk-text-medium">
                                     {review.reviewedBy.firstName}
@@ -102,9 +101,11 @@
                             <div class="uk-margin">
                                 {review.review}
                             </div>
+                            <hr>
                         {/each}
                     {:else}
-                        <div class="uk-text-medium uk-margin-top">No reviews yet..</div>
+                        <div class="uk-text-medium uk-margin">No reviews yet..</div>
+                        <hr>
                     {/if}
                 </div>
             </div>

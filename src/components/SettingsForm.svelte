@@ -6,39 +6,27 @@
     const stadiumService = getContext("StadiumService");
 
     let currentUser = get(user);
-
-    // Getting the details of the user from stores and assigning them to properties
-    // @ts-ignore
     let userId = currentUser._id;
-    // @ts-ignore
-    let firstName = currentUser.firstName;
-    // @ts-ignore
-    let lastName = currentUser.lastName;
-    // @ts-ignore
-    let email = currentUser.email;
-    let password = "";
-    // @ts-ignore
-    let admin = currentUser.admin;
+    let newDetails = {
+        firstName: currentUser.firstName,
+        lastName: currentUser.lastName,
+        email: currentUser.email,
+        password: "",
+        admin: currentUser.admin
+    }
     let errorMessage = "";
 
     async function updateSettings() {
-        const newUser = {
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            password: password,
-            admin: admin,
-        };
-        let success = await stadiumService.editUser(currentUser._id, newUser);
+        let success = await stadiumService.editUser(currentUser._id, newDetails);
         // If updating of details is successful, redirect to home
         // Else reset the form fields and inform the user of error
         if (success) {
             push("/home");
         } else {
-            firstName = currentUser._id;
-            lastName = currentUser.firstName;
-            email = currentUser.lastName;
-            password = "";
+            newDetails.firstName = currentUser._id;
+            newDetails.lastName = currentUser.firstName;
+            newDetails.email = currentUser.lastName;
+            newDetails.password = "";
             errorMessage = "Error updating details";
         }
     }
@@ -49,7 +37,7 @@
         <div class="uk-inline uk-width-1-1">
             <span class="uk-form-icon" uk-icon="icon: user" />
             <input
-                bind:value={firstName}
+                bind:value={newDetails.firstName}
                 class="uk-input uk-form-large"
                 type="text"
                 name="firstName"
@@ -60,7 +48,7 @@
         <div class="uk-inline uk-width-1-1">
             <span class="uk-form-icon" uk-icon="icon: user" />
             <input
-                bind:value={lastName}
+                bind:value={newDetails.lastName}
                 class="uk-input uk-form-large"
                 type="text"
                 name="lastName"
@@ -70,14 +58,14 @@
     <div class="uk-margin">
         <div class="uk-inline uk-width-1-1">
             <span class="uk-form-icon" uk-icon="icon: mail" />
-            <input bind:value={email} class="uk-input uk-form-large" type="text" name="email" />
+            <input bind:value={newDetails.email} class="uk-input uk-form-large" type="text" name="email" />
         </div>
     </div>
     <div class="uk-margin">
         <div class="uk-inline uk-width-1-1">
             <span class="uk-form-icon" uk-icon="icon: lock" />
             <input
-                bind:value={password}
+                bind:value={newDetails.password}
                 class="uk-input uk-form-large"
                 type="password"
                 name="password"
@@ -96,7 +84,7 @@
     style="background-color: red; color: white;">Delete Account</button
 >
 
-{#if admin}
+{#if currentUser.admin}
     <a href="#/admin-dashboard">
         <button
             class="uk-button uk-button-large uk-width-1-1 uk-background-primary uk-margin-top"

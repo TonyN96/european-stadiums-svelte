@@ -1,8 +1,6 @@
 <script>
     import { navBar } from "../stores";
     import { user } from "../stores.js";
-    import { get } from "svelte/store";
-    import { onMount } from "svelte";
 
     let currentUser;
 
@@ -23,9 +21,8 @@
     <div class="uk-navbar-right">
         <ul class="uk-navbar-nav">
             {#if currentUser}
-                <li>
-                    <!-- svelte-ignore a11y-invalid-attribute -->
-                    <a href="#" style="cursor: default;">{currentUser.firstName} {currentUser.lastName}</a>
+                <li class="user-custom-style uk-text-muted">
+                    <div>{currentUser.firstName} {currentUser.lastName}</div>
                 </li>
             {/if}
             <!-- Each loop which populates the nav bar with navBar from stores -->

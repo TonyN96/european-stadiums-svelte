@@ -6,26 +6,28 @@
 
     let errorMessage;
     // Properties of stadium binded to edit stadium form
-    let country;
-    let name;
-    let city;
-    let capacity;
-    let built;
-    let club;
-    let coords = [];
-    let imageUrl;
+    let newDetails = {
+        country: "",
+        name: "",
+        city: "",
+        capacity: "",
+        built: "",
+        club: "",
+        coords: [],
+        imageUrl: "",
+    }
 
     // Function used to set default form values to staidums existing details
     async function setDefaultValues() {
         let stadium = await stadiumService.findOneStadium(stadiumId);
-        country = stadium.country;
-        name = stadium.name;
-        city = stadium.city;
-        capacity = stadium.capacity;
-        built = stadium.built;
-        club = stadium.club;
-        coords = stadium.coords;
-        imageUrl = stadium.imageUrl;
+        newDetails.country = stadium.country;
+        newDetails.name = stadium.name;
+        newDetails.city = stadium.city;
+        newDetails.capacity = stadium.capacity;
+        newDetails.built = stadium.built;
+        newDetails.club = stadium.club;
+        newDetails.coords = stadium.coords;
+        newDetails.imageUrl = stadium.imageUrl;
     }
 
     // Default values set on page load
@@ -35,16 +37,6 @@
 
     // Function called to edit a stadium
     async function editStadium() {
-        const newDetails = {
-            name: name,
-            country: country,
-            city: city,
-            capacity: capacity,
-            built: built,
-            club: club,
-            coords: coords,
-            imageUrl: imageUrl,
-        };
         let success = await stadiumService.editStadium(stadiumId, newDetails);
         // If stadium was edited successfully, redirect to home
         // Else reset values to default and inform the user of error
@@ -58,7 +50,7 @@
 </script>
 
 <div class="uk-margin uk-width-expand uk-margin-auto">
-    <h3 class="uk-text-center">Edit Stadium - {name}</h3>
+    <h3 class="uk-text-center">Edit Stadium - {newDetails.name}</h3>
     <form on:submit|preventDefault={editStadium} class="uk-form-stacked uk-text-left">
         <div class="uk-grid uk-grid-stack">
             <div class="uk-width-expand">
@@ -66,7 +58,7 @@
                     <label class="uk-form-label" for="form-stacked-text">Name:</label>
                     <div class="uk-form-controls">
                         <input
-                            bind:value={name}
+                            bind:value={newDetails.name}
                             class="uk-input"
                             id="form-stacked-text"
                             type="text"
@@ -79,7 +71,7 @@
                     <div class="uk-width-1-2@s">
                         <div class="uk-form-label">City:</div>
                         <input
-                            bind:value={city}
+                            bind:value={newDetails.city}
                             class="uk-input"
                             id="form-stacked-text"
                             type="text"
@@ -90,7 +82,7 @@
                     <div class="uk-width-1-2@s">
                         <div class="uk-form-label">Country:</div>
                         <select
-                            bind:value={country}
+                            bind:value={newDetails.country}
                             class="uk-select"
                             id="form-stacked-text"
                             name="country"
@@ -106,7 +98,7 @@
                 <div class="uk-margin">
                     <div class="uk-form-label">Capacity:</div>
                     <input
-                        bind:value={capacity}
+                        bind:value={newDetails.capacity}
                         class="uk-input"
                         id="form-stacked-text"
                         type="number"
@@ -117,7 +109,7 @@
                 <div class="uk-margin">
                     <div class="uk-form-label">Year built:</div>
                     <input
-                        bind:value={built}
+                        bind:value={newDetails.built}
                         class="uk-input"
                         id="form-stacked-text"
                         type="number"
@@ -128,7 +120,7 @@
                 <div class="uk-margin">
                     <div class="uk-form-label">Club:</div>
                     <input
-                        bind:value={club}
+                        bind:value={newDetails.club}
                         class="uk-input"
                         id="form-stacked-text"
                         type="name"
@@ -140,7 +132,7 @@
                     <div class="uk-width-1-2@s">
                         <div class="uk-form-label">X co-ordinate:</div>
                         <input
-                            bind:value={coords[0]}
+                            bind:value={newDetails.coords[0]}
                             class="uk-input"
                             id="form-stacked-text"
                             type="text"
@@ -151,7 +143,7 @@
                     <div class="uk-width-1-2@s">
                         <div class="uk-form-label">Y co-ordinate:</div>
                         <input
-                            bind:value={coords[1]}
+                            bind:value={newDetails.coords[1]}
                             class="uk-input"
                             id="form-stacked-text"
                             type="text"
@@ -160,15 +152,6 @@
                         />
                     </div>
                 </div>
-                <!-- <div class="uk-margin">
-                <div class="uk-form-label">Image (required):</div>
-                <input
-                    bind:value={imageFile}
-                    type="file"
-                    name="imagefile"
-                    accept="image/png, image/jpeg"
-                />
-            </div> -->
                 <div class="uk-width-1 uk-margin">
                     <div class="uk-margin">
                         <button

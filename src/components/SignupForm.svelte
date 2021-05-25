@@ -3,8 +3,6 @@
     import { getContext } from "svelte";
     const stadiumService = getContext("StadiumService");
 
-    let errorMessage = "";
-
     let newUser = {
         firstName: "",
         lastName: "",
@@ -12,6 +10,7 @@
         password: "",
         admin: false,
     };
+    let errorMessage = "";
 
     async function signup() {
         let success = await stadiumService.createUser(newUser);

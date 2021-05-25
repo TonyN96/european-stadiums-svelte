@@ -1,7 +1,5 @@
 import axios from "axios";
 import { user } from "../stores.js";
-import { stadiums } from "../stores.js";
-import { get } from "svelte/store";
 
 export class StadiumService {
     stadiumList = [];
@@ -61,7 +59,6 @@ export class StadiumService {
         } catch (error) {
             return false;
         }
-        
     }
 
     async editUser(userId, newDetails) {
