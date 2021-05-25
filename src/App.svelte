@@ -17,8 +17,9 @@
     import Router from "svelte-spa-router";
     import DeleteStadium from "./components/DeleteStadium.svelte";
     import DeleteUser from "./components/DeleteUser.svelte";
+    import Logout from "./components/Logout.svelte";
 
-    setContext("StadiumService", new StadiumService("https://european-stadiums.herokuapp.com"));
+    setContext("StadiumService", new StadiumService("http://localhost:4000"));
 
     let routes = {
         "/": Main,
@@ -28,7 +29,7 @@
         "/add-stadium": AddStadium,
         "/edit-stadium/:id": EditStadium,
         "/delete-stadium/:id": DeleteStadium,
-        "/logout": Main,
+        "/logout": Logout,
         "/settings": Settings,
         "/delete-user/:id": DeleteUser,
         "/admin-dashboard": AdminDashboard,

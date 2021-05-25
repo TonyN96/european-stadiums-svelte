@@ -62,17 +62,23 @@ export class StadiumService {
     }
 
     async logout() {
-        user.set({
-            _id: "",
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            admin: false,
-            token: "",
-        });
-        axios.defaults.headers.common["Authorization"] = "";
-        localStorage.stadium = null;
+        try {
+            user.set({
+                _id: "",
+                firstName: "",
+                lastName: "",
+                email: "",
+                password: "",
+                admin: false,
+                token: "",
+            });
+            axios.defaults.headers.common["Authorization"] = "";
+            localStorage.stadium = null;
+            return true;
+        } catch (error) {
+            return false;
+        }
+        
     }
 
     async editUser(userId, newDetails) {

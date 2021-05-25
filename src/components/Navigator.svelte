@@ -1,5 +1,14 @@
 <script>
     import { navBar } from "../stores";
+    import { user } from "../stores.js";
+    import { get } from "svelte/store";
+    import { onMount } from "svelte";
+
+    let currentUser;
+
+    user.subscribe(value => {
+        currentUser = value;
+    })
 </script>
 
 <nav class="uk-navbar uk-padding-small uk-container" uk-navbar>
@@ -13,6 +22,12 @@
 
     <div class="uk-navbar-right">
         <ul class="uk-navbar-nav">
+            {#if currentUser}
+                <li>
+                    <!-- svelte-ignore a11y-invalid-attribute -->
+                    <a href="#" style="cursor: default;">{currentUser.firstName} {currentUser.lastName}</a>
+                </li>
+            {/if}
             <!-- Each loop which populates the nav bar with navBar from stores -->
             {#each $navBar.bar as nav}
                 <li>

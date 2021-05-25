@@ -1,14 +1,5 @@
 <script>
-    import { getContext, onMount } from "svelte";
-    const stadiumService = getContext("StadiumService");
-    let mapsKey;
     export let categorisedStadiums = [];
-
-    onMount(async () => {
-        // Get google maps key for loading map lightboxes
-        mapsKey = await stadiumService.getMapsKey();
-        // Find stadiums by country passed in to component
-    });
 </script>
 
 {#each categorisedStadiums as category}
@@ -37,7 +28,13 @@
                     Capacity: {stadium.capacity} <br />
                     Built: {stadium.built} <br />
                     Club: {stadium.club} <br />
-                    Rating: {#if stadium.rating}{stadium.rating}/5{:else}None yet{/if}<br />
+                    Rating: {#if stadium.rating}{stadium.rating}% {#if stadium.rating >= 50}<i
+                                class="fas fa-thumbs-up"
+                                style="color: green"
+                            />{:else}<i
+                                class="fas fa-thumbs-down"
+                                style="color: red"
+                            />{/if}{:else}None yet{/if}<br />
                 </div>
 
                 <div class="uk-width-expand uk-flex uk-flex-between uk-flex-bottom">
@@ -54,25 +51,10 @@
                         >
                             <i
                                 class="fas fa-file"
-                                style="color: rgba(230, 176, 28, 0.829); font-size: 24px;"
+                                style="color: rgba(32, 192, 72, 0.829); font-size: 24px;"
                                 title="Reviews"
                                 uk-tooltip
                             />
-                        </div>
-
-                        <div class="uk-inline" style="vertical-align: baseline;" uk-lightbox>
-                            <a
-                                href="https://www.google.com/maps/embed/v1/place?key={mapsKey}&q={stadium
-                                    .coords[0]},{stadium.coords[1]}&maptype=satellite"
-                                data-caption="{stadium.name}, {stadium.city}"
-                                data-type="iframe"
-                                ><i
-                                    class="fas fa-map-marker-alt"
-                                    style="color: rgba(49, 216, 57, 0.829); font-size: 24px;"
-                                    title="View on map"
-                                    uk-tooltip
-                                /></a
-                            >
                         </div>
 
                         <div

@@ -1,7 +1,6 @@
 <script>
     import { getContext, onMount } from "svelte";
     import ListStadiums from "../components/ListStadiums.svelte";
-    import { get } from "svelte/store";
     import { navBar, mainMenu, stadiums } from "../stores";
     import "leaflet/dist/leaflet.css";
     import { LeafletMap } from "../services/leaflet-maps";
@@ -53,8 +52,9 @@
                 allStadiums[x].reviews[y].date = reviewDateStr;
             }
             if (totalRatings != 0) {
-                let rating = totalRatings / allStadiums[x].reviews.length;
-                allStadiums[x].rating = rating.toFixed(2);
+                allStadiums[x].rating = (totalRatings / allStadiums[x].reviews.length) * 20;
+            } else {
+                allStadiums[x].rating = null;
             }
         }
         stadiums.set(allStadiums);
