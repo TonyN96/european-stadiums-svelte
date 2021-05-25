@@ -25,16 +25,8 @@ export class StadiumService {
                 password,
             });
             axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
-            user.set({
-                _id: response.data.user._id,
-                firstName: response.data.user.firstName,
-                lastName: response.data.user.lastName,
-                email: email,
-                password: password,
-                admin: response.data.user.admin,
-                token: response.data.token,
-            });
-            localStorage.stadium = JSON.stringify(response.data.token);
+            user.set(response.data.user);
+            localStorage.token = JSON.stringify(response.data.token);
             return response.status == 201;
         } catch (error) {
             return false;
@@ -45,16 +37,8 @@ export class StadiumService {
         try {
             const response = await axios.post(`${this.baseUrl}/api/users`, newUser);
             axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
-            user.set({
-                _id: response.data.user._id,
-                firstName: response.data.user.firstName,
-                lastName: response.data.user.lastName,
-                email: response.data.user.email,
-                password: response.data.user.password,
-                admin: response.data.user.admin,
-                token: response.data.token,
-            });
-            localStorage.stadium = JSON.stringify(response.data.token);
+            user.set(response.data.user);
+            localStorage.token = JSON.stringify(response.data.token);
             return response;
         } catch (error) {
             return false;
@@ -70,10 +54,9 @@ export class StadiumService {
                 email: "",
                 password: "",
                 admin: false,
-                token: "",
             });
             axios.defaults.headers.common["Authorization"] = "";
-            localStorage.stadium = null;
+            localStorage.token = null;
             return true;
         } catch (error) {
             return false;
@@ -84,15 +67,7 @@ export class StadiumService {
     async editUser(userId, newDetails) {
         try {
             const response = await axios.post(this.baseUrl + "/api/users/" + userId, newDetails);
-            user.set({
-                _id: response.data.user._id,
-                firstName: response.data.user.firstName,
-                lastName: response.data.user.lastName,
-                email: response.data.user.email,
-                password: response.data.user.password,
-                admin: response.data.user.admin,
-                token: response.data.token,
-            });
+            user.set(response.data.user);
             return response;
         } catch (error) {
             return false;
@@ -209,6 +184,15 @@ export class StadiumService {
         try {
             const response = await axios.get(this.baseUrl + "/api/reviews");
             return response.data;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    async addReview(review) {
+        try {
+            const response = await axios.post(this.baseUrl + "/api/reviews", review);
+            return response.status == 201;
         } catch (error) {
             return null;
         }

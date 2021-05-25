@@ -1,7 +1,14 @@
 <script>
     import { navBar, welcomeMenu } from "../stores";
+    import { getContext, onMount } from "svelte";
+    const stadiumService = getContext("StadiumService");
+
     navBar.set({
         bar: welcomeMenu,
+    });
+
+    onMount(async () => {
+        await stadiumService.logout();
     });
 </script>
 

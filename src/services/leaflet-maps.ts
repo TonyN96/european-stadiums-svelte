@@ -18,6 +18,7 @@ export interface Location {
 }
 
 export interface MapConfig {
+    scrollWheelZoom: boolean,
     location: Location;
     zoom: number;
     minZoom: number;
@@ -42,6 +43,7 @@ export class LeafletMap {
             defaultLayer = this.baseLayers[activeLayer];
         }
         this.imap = L.map(id, {
+            scrollWheelZoom: descriptor.scrollWheelZoom,
             center: [descriptor.location.lat, descriptor.location.lng],
             zoom: descriptor.zoom,
             minZoom: descriptor.minZoom,
@@ -64,10 +66,10 @@ export class LeafletMap {
         this.control = L.control.layers(this.baseLayers, this.overlays).addTo(this.imap);
     }
 
-    showZoomControl(position = "topleft") {
+    showZoomControl() {
         L.control
             .zoom({
-                position: position,
+                position: "topleft",
             })
             .addTo(this.imap);
     }

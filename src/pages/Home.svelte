@@ -63,6 +63,7 @@
         categorisedStadiums = categoriseResult;
 
         const mapConfig = {
+            scrollWheelZoom: false,
             location: { lat: 48.630117, lng: 5.607379 },
             zoom: 4,
             minZoom: 0,

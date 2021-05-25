@@ -84,7 +84,7 @@
             <div id="reviews-modal-{stadium._id}" uk-modal>
                 <div class="uk-modal-dialog uk-modal-body">
                     <h2 class="uk-modal-title">{stadium.name} Reviews</h2>
-                    {#if stadium.reviews}
+                    {#if stadium.reviews.length > 0}
                         {#each stadium.reviews as review}
                             <div
                                 class="uk-flex uk-flex-between uk-flex-middle uk-margin-medium-top"
