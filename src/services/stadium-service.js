@@ -71,15 +71,6 @@ export class StadiumService {
         }
     }
 
-    async getUserNameById(userId) {
-        try {
-            const response = await axios.get(this.baseUrl + "/api/users/name/" + userId);
-            return response.data;
-        } catch (error) {
-            return false;
-        }
-    }
-
     async findAllUsers() {
         try {
             const response = await axios.get(this.baseUrl + "/api/users");
@@ -120,16 +111,6 @@ export class StadiumService {
         }
     }
 
-    async findStadiumByCountry(country) {
-        try {
-            const response = await axios.get(this.baseUrl + "/api/stadiums/country/" + country);
-            this.stadiumList = response.data;
-            return this.stadiumList;
-        } catch (error) {
-            return [];
-        }
-    }
-
     async addStadium(stadium) {
         try {
             const response = await axios.post(this.baseUrl + "/api/stadiums", stadium);
@@ -154,15 +135,6 @@ export class StadiumService {
             return response.status == 201;
         } catch (error) {
             return false;
-        }
-    }
-
-    async getMapsKey() {
-        try {
-            const response = await axios.get(this.baseUrl + "/api/stadiums/mapsKey");
-            return response.data;
-        } catch (error) {
-            return null;
         }
     }
 
@@ -202,15 +174,6 @@ export class StadiumService {
             return this.reviewsList;
         } catch (error) {
             return [];
-        }
-    }
-
-    async getStadiumRating(stadiumId) {
-        try {
-            const response = await axios.get(this.baseUrl + "/api/stadiums/rating/" + stadiumId);
-            return response.data;
-        } catch (error) {
-            return null;
         }
     }
 }

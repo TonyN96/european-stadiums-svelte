@@ -28,6 +28,7 @@ This app is based on the server-rendered version of the app and makes use of it'
 - Svelte
 - [ViteJS](https://vitejs.dev/)
 - [UIKit](https://getuikit.com/)
+- [Leaflet.js](https://leafletjs.com/)
 - [svelte-spa-router](https://www.npmjs.com/package/svelte-spa-router)
 
 ## Usage

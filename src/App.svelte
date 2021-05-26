@@ -19,7 +19,7 @@
     import DeleteUser from "./components/DeleteUser.svelte";
     import Logout from "./components/Logout.svelte";
 
-    setContext("StadiumService", new StadiumService("http://localhost:4000"));
+    setContext("StadiumService", new StadiumService("https://european-stadiums.herokuapp.com"));
 
     let routes = {
         "/": Main,
